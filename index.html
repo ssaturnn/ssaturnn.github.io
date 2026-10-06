@@ -177,6 +177,37 @@
   .pipe .flow { stroke: var(--cyan); stroke-width: 2; fill: none; stroke-dasharray: 6 120; animation: flow 2.4s linear infinite; filter: drop-shadow(0 0 4px var(--cyan)); }
   @keyframes flow { to { stroke-dashoffset: -126; } }
 
+
+  /* now shipping */
+  .ship { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; margin-top: 56px; align-items: stretch; }
+  .ship-vis { display: flex; align-items: center; position: relative; border-radius: 24px; border: 1px solid var(--line); background: radial-gradient(120% 90% at 20% 0%, rgba(105,226,255,.08), transparent 60%), var(--card); padding: 18px; overflow: hidden; }
+  .ship-vis svg { width: 100%; height: auto; display: block; }
+  .ship-vis .bx rect { fill: rgba(255,255,255,.04); stroke: var(--line-hi); }
+  .ship-vis .bx.core rect { stroke: var(--cyan); fill: rgba(105,226,255,.07); }
+  .ship-vis .bx.rf rect { stroke: var(--violet); fill: rgba(139,123,255,.08); }
+  .ship-vis .bx.out rect { stroke: var(--lime); fill: rgba(183,255,106,.06); }
+  .ship-vis text { fill: var(--ink); font-family: var(--mono); font-size: 11px; }
+  .ship-vis text.sub { fill: var(--muted); font-size: 9.5px; }
+  .ship-vis .e { stroke: var(--line-hi); stroke-width: 1.2; fill: none; }
+  .ship-vis .f { stroke-width: 2; fill: none; stroke-dasharray: 5 140; animation: flow2 2.8s linear infinite; }
+  .ship-vis .f.c { stroke: var(--cyan); filter: drop-shadow(0 0 4px var(--cyan)); }
+  .ship-vis .f.v { stroke: var(--violet); filter: drop-shadow(0 0 4px var(--violet)); animation-delay: .7s; }
+  .ship-vis .f.l { stroke: var(--lime); filter: drop-shadow(0 0 4px var(--lime)); animation-delay: 1.4s; }
+  @keyframes flow2 { to { stroke-dashoffset: -145; } }
+  .log { border-radius: 24px; border: 1px solid var(--line); background: var(--card); padding: 22px 22px 18px; display: flex; flex-direction: column; }
+  .log .prog { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .log .bar2 { margin: 10px 0 16px; height: 6px; border-radius: 99px; background: rgba(255,255,255,.06); overflow: hidden; }
+  .log .bar2 i { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, var(--cyan), var(--violet)); box-shadow: 0 0 14px rgba(105,226,255,.6); }
+  .log ul { list-style: none; display: grid; gap: 9px; }
+  .log li { display: grid; grid-template-columns: 84px 1fr; gap: 10px; align-items: start; font-size: 14.5px; color: var(--muted); }
+  .log li b { color: var(--ink); font-weight: 500; }
+  .st { font-family: var(--mono); font-size: 10.5px; padding: 2px 8px; border-radius: 99px; white-space: nowrap; margin-top: 2px; justify-self: start; }
+  .st.done { color: var(--lime); background: rgba(183,255,106,.1); }
+  .st.wip { color: var(--cyan); background: rgba(105,226,255,.1); animation: pulse 1.6s ease-in-out infinite; }
+  .st.next { color: var(--faint); border: 1px solid var(--line-hi); }
+  @keyframes pulse { 50% { opacity: .45; } }
+  @media (max-width: 860px) { .ship { grid-template-columns: 1fr; } }
+
   /* stacking cards */
   .stack { margin-top: 56px; }
   .scard {
@@ -244,6 +275,7 @@
 <nav class="nav" aria-label="Main">
   <a class="mark" href="#top" aria-label="Home">AT</a>
   <a class="link" href="#work">Work</a>
+  <a class="link hide-s" href="#now">Now</a>
   <a class="link hide-s" href="#projects">Projects</a>
   <a class="link" href="#contact">Contact</a>
   <a class="cv" href="Aleksandr-Turchaninov-CV.pdf" download>CV</a>
@@ -324,11 +356,63 @@
           <p>Gateway to ML recognition of ~25 document types. PII-by-design: the service never stores or sees raw personal data. HR corrections feed a fine-tuning loop.</p>
         </article>
 
+        <article class="tile t-wide">
+          <div class="label">platform</div>
+          <h3>One codebase, many assistants</h3>
+          <p>Turned hard-coded bot copies into a config-driven platform: HR, service desk, staff and facilities bots are rows in a database, served by one parametrised Go module.</p>
+        </article>
+
+        <article class="tile t-wide">
+          <div class="label">agents</div>
+          <h3>Legal assistant</h3>
+          <p>LLM agent over legal and regulatory documents for the legal team; fixed concurrency bugs in the agent runtime under real load.</p>
+        </article>
+
         <article class="tile t-full">
           <div class="label">pipelines</div>
           <h3>Meeting Scribe &amp; Thread Summary</h3>
           <p>Async transcription on worker pods — WhisperX with speaker diarisation, FFmpeg, a PostgreSQL task queue with leader election and heartbeat recovery. Split-and-merge summarisation for huge messenger threads.</p>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="now" style="padding-top:0">
+    <div class="wrap">
+      <div class="kicker">// now shipping · autumn 2026</div>
+      <h2>Moving Ozon’s AI assistants <em>onto RAGFlow.</em></h2>
+      <div class="ship">
+        <div class="ship-vis">
+          <svg viewBox="0 0 520 330" aria-label="Several assistants route through one Go platform into RAGFlow agents and return answers with sources and confidence">
+            <g class="bx"><rect x="8" y="22" width="112" height="40" rx="10"/><text x="64" y="46" text-anchor="middle">HR</text></g>
+            <g class="bx"><rect x="8" y="92" width="112" height="40" rx="10"/><text x="64" y="116" text-anchor="middle">Service desk</text></g>
+            <g class="bx"><rect x="8" y="162" width="112" height="40" rx="10"/><text x="64" y="186" text-anchor="middle">Facilities</text></g>
+            <g class="bx"><rect x="8" y="232" width="112" height="40" rx="10"/><text x="64" y="256" text-anchor="middle">Staff</text></g>
+            <path class="e" d="M120 42 C160 42 160 147 196 147 M120 112 C160 112 160 147 196 147 M120 182 C160 182 160 147 196 147 M120 252 C160 252 160 147 196 147"/>
+            <path class="f c" d="M120 42 C160 42 160 147 196 147 M120 112 C160 112 160 147 196 147 M120 182 C160 182 160 147 196 147 M120 252 C160 252 160 147 196 147"/>
+            <g class="bx core"><rect x="196" y="112" width="120" height="70" rx="12"/><text x="256" y="142" text-anchor="middle">Go platform</text><text class="sub" x="256" y="160" text-anchor="middle">bots as config</text></g>
+            <path class="e" d="M316 147 H352"/><path class="f v" d="M316 147 H352"/>
+            <g class="bx rf"><rect x="352" y="96" width="160" height="102" rx="12"/><text x="432" y="124" text-anchor="middle">RAGFlow agents</text><text class="sub" x="432" y="146" text-anchor="middle">retrieval · LLM · canvas</text><text class="sub" x="432" y="164" text-anchor="middle">streaming API</text><text class="sub" x="432" y="182" text-anchor="middle">stg → prod</text></g>
+            <path class="e" d="M432 198 V246"/><path class="f l" d="M432 198 V246"/>
+            <g class="bx out"><rect x="332" y="246" width="200" height="62" rx="12" transform="translate(-12 0)"/><text x="420" y="272" text-anchor="middle">answer</text><text class="sub" x="420" y="290" text-anchor="middle">+ sources + confidence</text></g>
+          </svg>
+        </div>
+        <div class="log">
+          <div class="prog"><span>migration progress</span><span id="progTxt">6 / 10 shipped</span></div>
+          <div class="bar2"><i id="progBar"></i></div>
+          <ul>
+            <li><span class="st done">shipped</span><span><b>RAGFlow agent client in Go</b> — streaming, metrics, live in production</span></li>
+            <li><span class="st done">shipped</span><span><b>Agent calls from a sandbox</b> to test agents safely before rollout</span></li>
+            <li><span class="st done">shipped</span><span><b>Bots as configuration</b> — one module instead of a copy per bot</span></li>
+            <li><span class="st done">shipped</span><span><b>Facilities assistant</b> on RAGFlow in the corporate messenger</span></li>
+            <li><span class="st done">shipped</span><span><b>Sources and confidence</b> attached to every answer</span></li>
+            <li><span class="st done">shipped</span><span><b>HR-bot on RAGFlow</b> — rolling out now</span></li>
+            <li><span class="st wip">in progress</span><span><b>Answer diagnostics</b> — why the agent answered what it did</span></li>
+            <li><span class="st next">next</span><span><b>Per-document access rights</b></span></li>
+            <li><span class="st next">next</span><span><b>Agent versioning</b> from staging to production</span></li>
+            <li><span class="st next">next</span><span><b>Dialogue retention</b> policies</span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -548,7 +632,7 @@
   document.querySelectorAll("canvas[data-vis]").forEach(miniVis);
 
   /* GSAP */
-  if (reduce || !window.gsap) return;
+  if (reduce || !window.gsap) { const b = document.getElementById("progBar"); if (b) b.style.width = "60%"; return; }
   gsap.registerPlugin(ScrollTrigger);
 
   gsap.from(".status, h1, .who, .ctas", { y: 30, opacity: 0, duration: 1.1, ease: "power3.out", stagger: .12, delay: .1 });
@@ -589,6 +673,12 @@
     gsap.to(card, { scale: .92, opacity: .35, ease: "none",
       scrollTrigger: { trigger: cards[i + 1], start: "top bottom", end: "top 90px", scrub: true } });
   });
+
+
+  // migration progress
+  gsap.to("#progBar", { width: "60%", duration: 1.6, ease: "power3.out", scrollTrigger: { trigger: ".log", start: "top 80%" } });
+  gsap.from(".log li", { x: 18, opacity: 0, duration: .6, stagger: .07, ease: "power2.out", scrollTrigger: { trigger: ".log", start: "top 80%" } });
+  gsap.from(".ship-vis .bx", { scale: .85, opacity: 0, transformOrigin: "50% 50%", duration: .7, stagger: .08, ease: "back.out(1.6)", scrollTrigger: { trigger: ".ship-vis", start: "top 80%" } });
 
   // timeline progress
   gsap.to("#tl .bar", { height: "calc(100% - 12px)", ease: "none", scrollTrigger: { trigger: "#tl", start: "top 70%", end: "bottom 60%", scrub: .5 } });
